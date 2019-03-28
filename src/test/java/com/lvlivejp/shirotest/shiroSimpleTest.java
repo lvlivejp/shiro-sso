@@ -33,7 +33,7 @@ public class shiroSimpleTest {
         subject.login(usernamePasswordToken);
 
         System.out.println("isAuthenticated:" + subject.isAuthenticated());
-        subject.checkRoles("admin1");
+        subject.checkRoles("admin11");
     }
 
     public static void main(String[] args) {
