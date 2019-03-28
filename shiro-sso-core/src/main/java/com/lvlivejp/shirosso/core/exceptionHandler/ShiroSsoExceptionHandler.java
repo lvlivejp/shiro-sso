@@ -1,9 +1,9 @@
-package com.lvlivejp.shirosso.exceptionHandle;
+package com.lvlivejp.shirosso.core.exceptionHandler;
 
-import com.lvlivejp.shirosso.base.BaseResult;
-import com.lvlivejp.shirosso.enums.ResultEnum;
-import com.lvlivejp.shirosso.exception.BusinessException;
-import com.lvlivejp.shirosso.utils.BaseResultUtils;
+import com.lvlivejp.shirosso.core.base.BaseResult;
+import com.lvlivejp.shirosso.core.enums.ResultEnum;
+import com.lvlivejp.shirosso.core.exception.ShiroSsoException;
+import com.lvlivejp.shirosso.core.utils.BaseResultUtils;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @ControllerAdvice
 @ResponseBody
-public class SecKillExceptionHandle {
+public class ShiroSsoExceptionHandler {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @ExceptionHandler(BusinessException.class)
+    @ExceptionHandler(ShiroSsoException.class)
     public BaseResult processBusinessException(Exception e) {
         logger.error(e.getMessage(), e);
-        if (e instanceof BusinessException) {
-            BusinessException businessException = (BusinessException) e;
+        if (e instanceof ShiroSsoException) {
+            ShiroSsoException businessException = (ShiroSsoException) e;
             return BaseResultUtils.fail(businessException.getErrorCode(), businessException.getMessage());
         }
         return BaseResultUtils.fail(ResultEnum.FAIL.getCode(), ResultEnum.FAIL.getName());

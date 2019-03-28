@@ -1,4 +1,4 @@
-package com.lvlivejp.shirosso.utils;
+package com.lvlivejp.shirosso.core.utils;
 
 public class ShiroThreadLocal {
 

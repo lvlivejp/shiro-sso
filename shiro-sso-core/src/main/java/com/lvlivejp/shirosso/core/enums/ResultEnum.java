@@ -1,4 +1,4 @@
-package com.lvlivejp.shirosso.enums;
+package com.lvlivejp.shirosso.core.enums;
 
 public enum ResultEnum {
     SUCCESS("0000", "成功"),

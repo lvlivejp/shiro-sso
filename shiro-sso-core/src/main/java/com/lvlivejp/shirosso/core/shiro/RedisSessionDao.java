@@ -1,6 +1,6 @@
-package com.lvlivejp.shirosso.shiro.session;
+package com.lvlivejp.shirosso.core.shiro;
 
-import com.lvlivejp.shirosso.utils.JedisUtils;
+import com.lvlivejp.shirosso.core.utils.JedisUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;

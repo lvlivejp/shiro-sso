@@ -1,7 +1,7 @@
-package com.lvlivejp.shirosso.utils;
+package com.lvlivejp.shirosso.core.utils;
 
-import com.lvlivejp.shirosso.base.BaseResult;
-import com.lvlivejp.shirosso.enums.ResultEnum;
+import com.lvlivejp.shirosso.core.base.BaseResult;
+import com.lvlivejp.shirosso.core.enums.ResultEnum;
 
 public class BaseResultUtils {
     public static BaseResult success(Object obj) {

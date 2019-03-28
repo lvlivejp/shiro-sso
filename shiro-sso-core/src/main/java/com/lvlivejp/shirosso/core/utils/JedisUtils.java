@@ -1,10 +1,9 @@
-package com.lvlivejp.shirosso.utils;
+package com.lvlivejp.shirosso.core.utils;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lvlivejp.shirosso.model.TUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.stereotype.Component;
@@ -148,29 +147,4 @@ public class JedisUtils {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-
-        ExecutorService es = Executors.newFixedThreadPool(10);
-
-        for (int i = 0; i < 10; i++) {
-            int id=i;
-            es.submit(()->{
-                try {
-                    System.out.println(new String(objectMapper.writeValueAsBytes(new TUser(id,"",""))));
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-            });
-        }
-
-        es.shutdown();
-
-        String str = "[\"com.lvlivejp.shirosso.model.TUser\",{\"id\":null,\"userName\":null,\"password\":null}]";
-        System.out.println("read:"+objectMapper.readValue(str,Object.class));
-
-        System.out.println(new String(SerializationUtils.serialize(new TUser())));
-    }
 }
