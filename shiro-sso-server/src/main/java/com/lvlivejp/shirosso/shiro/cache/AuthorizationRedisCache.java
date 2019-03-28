@@ -1,6 +1,6 @@
 package com.lvlivejp.shirosso.shiro.cache;
 
-import com.lvlivejp.shirosso.utils.JedisUtils;
+import com.lvlivejp.shirosso.core.utils.JedisUtils;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.apache.shiro.subject.SimplePrincipalCollection;

@@ -19,6 +19,8 @@ spring:
         max-wait: -1ms
         max-idle: 8
     timeout: 10s
+    cluster:
+      nodes: 10.10.13.131:6380,10.10.13.132:6380,10.10.13.133:6380
 
 mybatis:
   configuration:

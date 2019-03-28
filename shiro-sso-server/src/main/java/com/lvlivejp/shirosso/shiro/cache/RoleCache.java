@@ -1,6 +1,6 @@
 package com.lvlivejp.shirosso.shiro.cache;
 
-import com.lvlivejp.shirosso.utils.JedisUtils;
+import com.lvlivejp.shirosso.core.utils.JedisUtils;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class RoleCache<K, V> implements Cache<K, V> {
     @Value("${session.timeout}")
     private int SESSION_TIMEOUT;
 
-    private final String SHIRO_ROLE_PREFIX = "shiro_cache_id:";
+    private final String SHIRO_ROLE_PREFIX = "shiro_rolecache_id:";
 
     private byte[] getRedisKey(K k) {
 

@@ -12,4 +12,5 @@ public class ShiroSsoApplication {
         SpringApplication.run(ShiroSsoApplication.class, args);
     }
 
+
 }

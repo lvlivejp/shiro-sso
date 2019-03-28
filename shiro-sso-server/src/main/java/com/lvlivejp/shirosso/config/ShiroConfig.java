@@ -8,7 +8,7 @@ import com.lvlivejp.shirosso.shiro.filter.CustomerFormAuthenticationFilter;
 import com.lvlivejp.shirosso.shiro.filter.PermissionsOrAuthorizationFilter;
 import com.lvlivejp.shirosso.shiro.realm.CustomRealm;
 import com.lvlivejp.shirosso.shiro.session.CustomShiroWebSessionManager;
-import com.lvlivejp.shirosso.shiro.session.RedisSessionDao;
+import com.lvlivejp.shirosso.core.shiro.RedisSessionDao;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;

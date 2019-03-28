@@ -1,10 +1,10 @@
 package com.lvlivejp.shirosso.service.impl;
 
-import com.lvlivejp.shirosso.base.BaseResult;
+import com.lvlivejp.shirosso.core.base.BaseResult;
+import com.lvlivejp.shirosso.core.utils.BaseResultUtils;
 import com.lvlivejp.shirosso.mapper.TUserDao;
 import com.lvlivejp.shirosso.model.TUser;
 import com.lvlivejp.shirosso.service.UserService;
-import com.lvlivejp.shirosso.utils.BaseResultUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
