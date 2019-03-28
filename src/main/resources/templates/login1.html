@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>登录</title>
+    <th:block th:replace="base/baseHead :: #initHead"></th:block><!-- 调用模板 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="/script/login.js"></script>
+</head>
+<body>
+<form class="form-horizontal" role="form" method="post" action="/auth/login">
+    <fieldset>
+        <legend>查询条件</legend>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="username">用户名</label>
+            <div class="col-sm-4">
+                <input class="form-control" id="username" type="text" placeholder="用户名"/>
+            </div>
+            <label class="col-sm-2 control-label" for="password">用户密码</label>
+            <div class="col-sm-4">
+                <input class="form-control" id="password" type="password" placeholder="用户密码"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12" style="text-align: center;">
+                <!--<a class="btn btn-primary" href="#" role="button" id="loginBtn">登录</a>-->
+                <button type="submit" th:text="登录"/>
+            </div>
+        </div>
+        <input class="form-control" id="redirectUrl" type="hidden" th:value="${redirectUrl}"/>
+    </fieldset>
+</form>
+</body>
+</html>

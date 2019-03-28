@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lvlivejp.shirosso.mapper.TRolePermissionDao">
+
+    <select id="getPerNameByUserName" parameterType="String" resultType="TPermission">
+        select p.* from t_user_role ur ,t_user u,t_role r,t_permission p ,t_role_permission rp where
+        ur.user_id=u.id
+        and ur.role_id=r.role_id
+        and rp.role_id = ur.role_id
+        and rp.permission_id = p.permission_id
+        and u.user_name = #{userName}
+    </select>
+
+</mapper>

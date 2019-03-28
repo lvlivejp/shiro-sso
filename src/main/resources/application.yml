@@ -1,0 +1,69 @@
+spring:
+  datasource:
+    username: root
+    password: password
+    url: jdbc:mysql://192.168.10.11:3306/seckill
+  thymeleaf:
+    cache: false
+
+  #redis配置
+  redis:
+    database: 1
+    host: 123.56.41.25
+    port: 6379
+    password: re12dis
+    jedis:
+      pool:
+        max-active: 8
+        min-idle: 0
+        max-wait: -1ms
+        max-idle: 8
+    timeout: 10s
+
+mybatis:
+  configuration:
+    #是否返回自增主键
+    use-generated-keys: true
+    #是否匹配重命名列名
+    use-column-label: true
+    #是否启用驼峰命名转换
+    map-underscore-to-camel-case: true
+  #Model类所在的包名,mapper.xml中的resultType可以直接写类名，不区分大小写
+  type-aliases-package: com.lvlivejp.shirosso.model
+  #xml文件所在的目录
+  mapper-locations: classpath:mappers/*.xml
+
+mapper:
+  mappers:
+  - tk.mybatis.mapper.common.Mapper
+  not-empty: false
+  identity: MYSQL
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  #是否支持startPage(Object pamas)自定义参数名
+  supportMethodsArguments: true
+  #设置pamas中count的Key为countSql，执行过程中，如果pamas中有key为countSql的值，则取对应的值，否则就为null
+  #count为boolean，所以countSql对应的值为true或false，true表示执行count的Sql，false反之
+  params: count=countSql
+  #CountSql的后缀，默认为selectId+"_COUNT"，可自定义，如果没找到自定义SQL，则还是执行默认的selectId+"_COUNT"语句
+  #默认的countSql为替换select字段为count(0)
+  countSuffix: _COUNT
+logging:
+  level:
+    #Mybatis打印Sql语句日志
+    com.lvlivejp.simpledemo.mapper: debug
+
+session:
+  timeout: 6000
+
+shiro:
+  un-login-html: /loginview
+  un-login-json: /auth/unLogin
+  un-authorized-html: /html/401.html
+  un-authorized-json: /auth/unauthorized
+  login-path: /auth/login
+  logout-path: /auth/
+
+
