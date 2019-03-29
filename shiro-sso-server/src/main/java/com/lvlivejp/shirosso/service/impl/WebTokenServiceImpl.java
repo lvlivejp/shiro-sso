@@ -21,7 +21,7 @@ public class WebTokenServiceImpl implements WebTokenService {
     @Override
     public String generateToken(String sessionId) {
         String tokenKey = generateTokenKey();
-        jedisUtils.set(getTokenKey(tokenKey),sessionId);
+        jedisUtils.setex(getTokenKey(tokenKey),sessionId,SESSION_TIMEOUT);
         return tokenKey;
     }
 

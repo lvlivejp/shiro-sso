@@ -1,14 +1,10 @@
 package com.lvlivejp.shirosso.shiro.filter;
 
 import com.lvlivejp.shirosso.core.base.ShiroSsoConstant;
-import com.lvlivejp.shirosso.core.utils.CookieUtils;
-import com.lvlivejp.shirosso.core.utils.SpringBootBeanUtils;
-import com.lvlivejp.shirosso.shiro.authc.ShiroSsoCredentialsMatcher;
 import com.lvlivejp.shirosso.shiro.authc.ShiroSsoToken;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
@@ -111,7 +107,6 @@ public class CustomerFormAuthenticationFilter extends FormAuthenticationFilter {
             stringResponseEntity = restT.postForEntity("http://127.0.0.1:9090/auth/checkToken", paramMap, String.class);
             return stringResponseEntity.getStatusCode().is2xxSuccessful();
         } catch (RestClientException e) {
-            e.printStackTrace();
             return false;
         }
     }
