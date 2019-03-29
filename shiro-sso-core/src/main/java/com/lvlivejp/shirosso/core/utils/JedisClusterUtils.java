@@ -7,7 +7,7 @@ import redis.clients.jedis.JedisCluster;
 @Component
 public class JedisClusterUtils {
 
-    @Autowired
+    @Autowired(required = false)
     private JedisCluster jedisCluster;
 
     /**

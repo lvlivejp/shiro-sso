@@ -7,18 +7,17 @@ import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.SerializationUtils;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.lvlivejp.shirosso.core.base.ShiroSsoConstant.*;
+
 public class RedisSessionDao extends AbstractSessionDAO {
 
     @Autowired
     private JedisUtils jedisUtils;
-
-    private final String SHIRO_SESSION_PREFIX = "shiro_session_id:";
 
     @Value("${session.timeout}")
     private int SESSION_TIMEOUT;

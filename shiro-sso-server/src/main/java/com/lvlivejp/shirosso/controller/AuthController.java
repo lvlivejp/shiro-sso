@@ -5,6 +5,7 @@ import com.lvlivejp.shirosso.core.enums.ResultEnum;
 import com.lvlivejp.shirosso.core.utils.BaseResultUtils;
 import com.lvlivejp.shirosso.core.utils.ShiroThreadLocal;
 import com.lvlivejp.shirosso.service.UserService;
+import com.lvlivejp.shirosso.service.WebTokenService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 
 @Controller
@@ -26,6 +28,9 @@ public class AuthController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private WebTokenService webTokenService;
 
     @PostMapping("/login")
     public String login(String username,
@@ -54,16 +59,9 @@ public class AuthController {
         }
 
         if(StringUtils.hasText(redirectUrl)){
-            return "redirect:"+redirectUrl;
+            String webToken = webTokenService.generateToken(subject.getSession().getId().toString());
+            return "redirect:"+redirectUrl+"?token="+webToken;
         }
-        return "redirect:/indexview";
-    }
-
-    @PostMapping("/sessioncheck")
-    public String sessioncheck(String token,
-                        String redirectUrl,
-                        RedirectAttributes redirectAttributes) {
-        SecurityUtils.getSubject().getSession().getTimeout();
         return "redirect:/indexview";
     }
 
@@ -72,5 +70,17 @@ public class AuthController {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
         return BaseResultUtils.success();
+    }
+
+    @PostMapping("/checkToken")
+    public void checkToken(HttpServletResponse response,String token) {
+        if(!StringUtils.hasText(token)){
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+        boolean checkToken = webTokenService.checkToken(token);
+        if(!checkToken){
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        }
     }
 }

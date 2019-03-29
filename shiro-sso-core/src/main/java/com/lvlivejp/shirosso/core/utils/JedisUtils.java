@@ -2,26 +2,21 @@ package com.lvlivejp.shirosso.core.utils;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.stereotype.Component;
-import org.springframework.util.SerializationUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
-import java.io.IOException;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Component
 public class JedisUtils {
 
     Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<Object>(Object.class);
 
-    @Autowired
+    @Autowired(required = false)
     private JedisPool jedisPool;
 
     public JedisUtils() {
@@ -142,6 +137,26 @@ public class JedisUtils {
         try {
             jedis = getResource();
             return jedis.keys(shiro_session_prefix + "*");
+        } finally {
+            returnResource(jedis);
+        }
+    }
+
+    public boolean exists(String key) {
+        Jedis jedis = null;
+        try {
+            jedis = getResource();
+            return jedis.exists(key);
+        } finally {
+            returnResource(jedis);
+        }
+    }
+
+    public void expire(String key,int seconds) {
+        Jedis jedis = null;
+        try {
+            jedis = getResource();
+            jedis.expire(key,seconds);
         } finally {
             returnResource(jedis);
         }

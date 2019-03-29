@@ -68,4 +68,5 @@ shiro:
   login-path: /auth/login
   logout-path: /auth/
 
-
+server:
+  port: 9090

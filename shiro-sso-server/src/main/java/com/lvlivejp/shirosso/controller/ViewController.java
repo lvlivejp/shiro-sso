@@ -1,7 +1,10 @@
 package com.lvlivejp.shirosso.controller;
 
+import com.lvlivejp.shirosso.core.base.ShiroSsoConstant;
+import com.lvlivejp.shirosso.service.WebTokenService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -14,14 +17,18 @@ import java.net.URLDecoder;
 
 public class ViewController {
 
+    @Autowired
+    private WebTokenService webTokenService;
+
     @GetMapping("/loginview")
     public String loginview(HttpServletRequest servletRequest, Model model){
 
-        String redirectUrl = servletRequest.getParameter("redirectUrl");
+        String redirectUrl = servletRequest.getParameter(ShiroSsoConstant.SHIRO_REDIRECT_URL);
         Subject subject = SecurityUtils.getSubject();
         if(subject.isAuthenticated()){
             if(StringUtils.hasText(redirectUrl)){
-                return "redirect:/"+redirectUrl;
+                String webToken = webTokenService.generateToken(subject.getSession().getId().toString());
+                return "redirect:"+redirectUrl+"?token="+webToken;
             }else{
                 return "redirect:/indexview";
             }

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>登录</title>
+    <th:block th:replace="base/baseHead :: #initHead"></th:block><!-- 调用模板 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="/script/login.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <h1 class="text-center">
+                统一登录系统
+            </h1>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-4 column">
+        </div>
+        <div class="col-md-4 column">
+            <div class="alert alert-dismissable alert-warning" th:if="${errorMsg}">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4>
+                    注意!
+                </h4> <p th:text="${errorMsg}"></p></a>
+            </div>
+            <form class="form-horizontal" role="form" method="post">
+                <div class="form-group">
+                    <label for="username" class="col-sm-4 control-label">用户名</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="username" name="username"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-4 control-label">密码</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" id="password" name="password"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <a class="btn btn-primary" href="#" role="button" id="loginBtn">登录</a>
+                    </div>
+                </div>
+                <input class="form-control" id="redirectUrl" name="redirectUrl" type="hidden" th:value="${redirectUrl}"/>
+            </form>
+        </div>
+        <div class="col-md-4 column">
+        </div>
+    </div>
+</div>
+</body>
+</html>
