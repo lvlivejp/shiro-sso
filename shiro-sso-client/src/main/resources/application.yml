@@ -3,10 +3,10 @@ spring:
     cache: false
 
 shiro:
-  un-login-html: http://127.0.0.1:9090/loginview
+  un-login-html: http://xxlssoserver.com:9090/loginview
   un-authorized-html: /html/401.html
   un-authorized-json: /auth/unauthorized
   logout-path: /auth/
-
+  sso-server-token-check-url: http://xxlssoserver.com:9090/auth/checkToken
 server:
   port: 9000

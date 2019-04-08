@@ -5,6 +5,7 @@ import com.lvlivejp.shirosso.shiro.authc.ShiroSsoToken;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
@@ -25,6 +26,7 @@ import java.net.URLEncoder;
 public class CustomerFormAuthenticationFilter extends FormAuthenticationFilter {
 
     private String loginHtmlUrl;
+    private String ssoServerTokenCheckUrl;
 
     /**
      * 1.请求中含有token，代表是从sso server回调，需要再次访问sso server，确认该token是否有效
@@ -41,8 +43,11 @@ public class CustomerFormAuthenticationFilter extends FormAuthenticationFilter {
          * 请求中含有token，代表是从sso server回调，需要再次访问sso server，确认该token是否有效
          * 通过executeLogin的方法，调用ShiroSsoCredentialsMatcher中的doCredentialsMatch，去访问sso server。
          */
-        if(StringUtils.hasText(request.getParameter("token"))){
-            return this.executeLogin(request, response);
+        if(StringUtils.hasText(request.getParameter(ShiroSsoConstant.SHIRO_SSO_CLIENT_TOKEN))){
+            boolean executeLogin = this.executeLogin(request, response);
+            if(executeLogin){
+                return false;
+            }
         }
 
         /**
@@ -60,7 +65,7 @@ public class CustomerFormAuthenticationFilter extends FormAuthenticationFilter {
      * @return
      */
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
-        return new ShiroSsoToken(request.getParameter("token"));
+        return new ShiroSsoToken(request.getParameter(ShiroSsoConstant.SHIRO_SSO_CLIENT_TOKEN));
     }
 
     /**
@@ -79,8 +84,13 @@ public class CustomerFormAuthenticationFilter extends FormAuthenticationFilter {
             throw new IllegalStateException(msg);
         }
         Subject subject = getSubject(request, response);
-        subject.login(token);
-        return onLoginSuccess(token, subject, request, response);
+        try {
+            subject.login(token);
+        } catch (AuthenticationException e) {
+            return false;
+        }
+        issueSuccessRedirect(request, response);
+        return true;
     }
 
     /**
@@ -100,11 +110,11 @@ public class CustomerFormAuthenticationFilter extends FormAuthenticationFilter {
         Subject subject = SecurityUtils.getSubject();
         RestTemplate restT = new RestTemplate();
         MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<String, Object>();
-        paramMap.add("token", subject.getPrincipal());
+        paramMap.add(ShiroSsoConstant.SHIRO_SSO_CLIENT_TOKEN, subject.getPrincipal());
 
         ResponseEntity<String> stringResponseEntity = null;
         try {
-            stringResponseEntity = restT.postForEntity("http://127.0.0.1:9090/auth/checkToken", paramMap, String.class);
+            stringResponseEntity = restT.postForEntity(ssoServerTokenCheckUrl, paramMap, String.class);
             return stringResponseEntity.getStatusCode().is2xxSuccessful();
         } catch (RestClientException e) {
             return false;

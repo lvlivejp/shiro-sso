@@ -1,6 +1,7 @@
 package com.lvlivejp.shirosso.controller;
 
 import com.lvlivejp.shirosso.core.base.BaseResult;
+import com.lvlivejp.shirosso.core.base.ShiroSsoConstant;
 import com.lvlivejp.shirosso.core.enums.ResultEnum;
 import com.lvlivejp.shirosso.core.utils.BaseResultUtils;
 import com.lvlivejp.shirosso.core.utils.ShiroThreadLocal;
@@ -60,7 +61,7 @@ public class AuthController {
 
         if(StringUtils.hasText(redirectUrl)){
             String webToken = webTokenService.generateToken(subject.getSession().getId().toString());
-            return "redirect:"+redirectUrl+"?token="+webToken;
+            return "redirect:"+redirectUrl+"?"+ ShiroSsoConstant.SHIRO_SSO_CLIENT_TOKEN+ "="+webToken;
         }
         return "redirect:/indexview";
     }

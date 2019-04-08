@@ -1,6 +1,7 @@
 package com.lvlivejp.shirosso.config;
 
 import com.lvlivejp.shirosso.config.properties.ShiroProperties;
+import com.lvlivejp.shirosso.core.base.ShiroSsoConstant;
 import com.lvlivejp.shirosso.shiro.authc.ShiroSsoCredentialsMatcher;
 import com.lvlivejp.shirosso.shiro.authc.ShiroSsoToken;
 import com.lvlivejp.shirosso.shiro.filter.CustomerFormAuthenticationFilter;
@@ -60,7 +61,7 @@ public class ShiroConfig {
         /**
          * 同一域名时，防止客户端的sessionId覆盖SSO Server的SessionId
          */
-        Cookie cookie = new SimpleCookie("SSO_CLIENT_ID");
+        Cookie cookie = new SimpleCookie(ShiroSsoConstant.SSO_CLIENT_ID);
         cookie.setHttpOnly(true); //more secure, protects against XSS attacks
 
         DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
@@ -85,6 +86,7 @@ public class ShiroConfig {
         Map<String, Filter> filters = new HashMap<>();
         CustomerFormAuthenticationFilter filter = new CustomerFormAuthenticationFilter();
         filter.setLoginHtmlUrl(shiroProperties.getUnLoginHtml());
+        filter.setSsoServerTokenCheckUrl(shiroProperties.getSsoServerTokenCheckUrl());
         PermissionsOrAuthorizationFilter permissionsOrAuthorizationFilter = new PermissionsOrAuthorizationFilter();
         permissionsOrAuthorizationFilter.setUnLoginHtml(shiroProperties.getUnLoginHtml());
         permissionsOrAuthorizationFilter.setUnAuthorizedHtml(shiroProperties.getUnAuthorizedHtml());

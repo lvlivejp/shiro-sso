@@ -1,5 +1,6 @@
 package com.lvlivejp.shirosso.shiro.filter;
 
+import com.lvlivejp.shirosso.core.base.ShiroSsoConstant;
 import com.lvlivejp.shirosso.core.utils.SpringBootBeanUtils;
 import com.lvlivejp.shirosso.service.WebTokenService;
 import lombok.Getter;
@@ -41,7 +42,7 @@ public class CustomerFormAuthenticationFilter extends FormAuthenticationFilter {
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
 
-        String token = request.getParameter("token");
+        String token = request.getParameter(ShiroSsoConstant.SHIRO_SSO_CLIENT_TOKEN);
         if(StringUtils.hasText(token)){
             return true;
         }

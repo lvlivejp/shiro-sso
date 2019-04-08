@@ -28,7 +28,7 @@ public class ViewController {
         if(subject.isAuthenticated()){
             if(StringUtils.hasText(redirectUrl)){
                 String webToken = webTokenService.generateToken(subject.getSession().getId().toString());
-                return "redirect:"+redirectUrl+"?token="+webToken;
+                return "redirect:"+redirectUrl+"?"+ShiroSsoConstant.SHIRO_SSO_CLIENT_TOKEN+"="+webToken;
             }else{
                 return "redirect:/indexview";
             }
